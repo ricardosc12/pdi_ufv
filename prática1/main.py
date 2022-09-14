@@ -7,7 +7,7 @@ def mostrar_imagem(titulo,img):
     # cv2.waitKey(0)
 
 # Redimensionando imagem - Resolução Alta
-img = cv2.imread("assets/img.png")
+img = cv2.imread("assets/img2.png")
 img = cv2.resize(img, (960, 720))
 
 [col, lin, dim] = img.shape
@@ -16,7 +16,7 @@ img = cv2.resize(img, (960, 720))
 quadradoX, quadradoY = 512,288
 
 # Posição do video na imagem
-posX, posY = 428, 402
+posX, posY = 350, 370
 
 img2 = img.copy()
 
@@ -40,14 +40,23 @@ while True:
         for i in range(posX,posX+quadradoX):
             (b,g,r) = frame[j-posY,i-posX]
 
-            # Subsituição de cores muito verde
-            if(not g>=195):
-                img_final[j,i] = frame[j-posY,i-posX]
+            # Subsituição de cores verdes pela distancia das outras
+            blue_distance = int(g) - int(b)
+            red_distance = int(g) - int(r)
+
+            if(blue_distance>30 and red_distance>30):
+                img_final[j,i] = img[j,i]
             # Mantém pixel da imagem original
             else:
-                img_final[j,i] = img[j,i]
+                img_final[j,i] = frame[j-posY,i-posX]
+                
         
     vid_writter.write(img_final)
+
+    # Verificar
+    # cv2.imshow("TEste", img_final)
+    # cv2.waitKey(0)
+    # break
 
     if cv2.waitKey(1) & 0xFF == ord("S"):
         break
