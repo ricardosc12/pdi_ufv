@@ -118,6 +118,7 @@ outputDict = {
         "gauImg"   : gaussianGaussianImg5x5,
         "srcHist"  : sourceGaussian5x5Histogram,
         "sEpHist"  : saltAndPepperGaussian5x5Histogram,
-        "gauHist"  : gaussianGaussian5x5Histogram}
+        "gauHist"  : gaussianGaussian5x5Histogram
+    }
 }
 filters.generateOutput(outputDict)

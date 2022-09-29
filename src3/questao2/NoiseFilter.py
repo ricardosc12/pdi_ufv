@@ -69,11 +69,14 @@ class NoiseFilter:
             print("Ocorreu um erro: {}".format(e))
 
     def generateOutput(self, outputDict : dict):
-        for i, valueDict in outputDict.items():
-            for j, value in valueDict.items():
-                if "Hist" in j:
-                    plt.bar(np.arange(256), value)
-                    plt.savefig("saidas/{}/{}.jpg".format(i,j))
-                    plt.close()
-                else:
-                    cv2.imwrite("saidas/{}/{}.jpg".format(i,j), value)
+        try:
+            for i, valueDict in outputDict.items():
+                for j, value in valueDict.items():
+                    if "Hist" in j:
+                        plt.bar(np.arange(256), value)
+                        plt.savefig("saidas/{}/{}.jpg".format(i,j))
+                        plt.close()
+                    else:
+                        cv2.imwrite("saidas/{}/{}.jpg".format(i,j), value)
+        except Exception as e:
+            print("Ocorreu um erro: {}".format(e))
