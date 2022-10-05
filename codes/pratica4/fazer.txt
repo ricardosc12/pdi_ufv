@@ -1,0 +1,7 @@
+(1) discutir aula4 script2  (1)
+(2) aula4 script2 - LAB,HSV,RGB  (2)
+	traçar as bandas individualmente e analisar diferenças.
+(3) Aplicar segmentação de cor no video no jogo com erosão e dilatação
+	obter como resultado a posição do time (2 espaços de cor, RGB, HSV) resultado=VIDEO
+
+todos aula 4
