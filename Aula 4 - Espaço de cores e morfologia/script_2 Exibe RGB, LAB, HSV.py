@@ -14,7 +14,6 @@ imageLAB = cv2.cvtColor(original,cv2.COLOR_BGR2LAB)
 
 # resize image
 
-
 # Show the results
 cv2.imshow('SelectBGR',imageBGR)
 cv2.imshow('SelectYCB',imageHSV)
