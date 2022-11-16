@@ -1,46 +1,43 @@
 import cv2 # Biblioteca OpenCV
 import pandas as pd # Biblioteca pandas para gerar o csv
 from sklearn.preprocessing import MinMaxScaler # Biblioteca para transformar as features em um range
-from os import listdir
-from os.path import isfile, join
+from utils import * # Modulo com algumas funcoes auxiliares
 
-def min_max_scaling(column):
-    return(column-column.min())/(column.max()-column.min())
+class Hu:
+    def __init__(self):
+        self.xMoments = [] # Armazena os momentos de hu
+        self.yMoments = [] # Armazena de qual letra cada momento de hu e
+        self.letters = ['A','B','C','D','E','F','G','I','L','M','N'] # Letras do dataset
+        self.scaler = MinMaxScaler() # MinMax para transformar os momentos de Hu
+    
+    def getHuMoments(self, image):
+        huMoments = cv2.HuMoments(cv2.moments(image)).flatten()
+        return huMoments
 
-momentos = []
-result = []
-letras = ['A','B','C','D','E','F','G','I','L','M','N']
-count = 0
+    def generateHuMoments(self):
+        print("Gerando momentos...")
+        count = 0
+        for letter in self.letters:
+            files = getImagesByLetter(letter)
+            for file in files:
+                image = getImageFromDataset(letter, file)
+                self.xMoments.append(self.getHuMoments(image))
+                self.yMoments.append(count)
+            count += 1
+    
+    def transformHuData(self, df):
+        for col in df.columns:
+            df[col] = minMaxScaling(df[col])
 
-for letra in letras:
-    path = "./dataset_gestos/{}".format(letra)
-    files = [f for f in listdir(path) if isfile(join(path, f))]
-    for file in files:
-        image = cv2.imread("dataset_gestos/{}/{}".format(letra, file),0)
-        # success, image = cv2.threshold(image, 110, 255, cv2.THRESH_BINARY)
-        image = cv2.medianBlur(image,5)
-        image = cv2.adaptiveThreshold (image,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY,11,2)
-        # image = cv2.bitwise_not(image)
-        # success, image = cv2.threshold(image, 60, 255, cv2.THRESH_BINARY)
-        # image = 255 - image
-        momentos.append(cv2.HuMoments(cv2.moments(image)).flatten())
-        result.append(count)
+        self.scaler.fit(df)
+        scaled = self.scaler.fit_transform(df)
+        scaledMoments = pd.DataFrame(scaled, columns=df.columns)
+        dfFinal = scaledMoments.round(decimals=2)
+        return dfFinal
 
-        # cv2.imshow("Imagem em escala de cinza", image)
-        # cv2.waitKey(0)
-        # break
-    count+=1
-
-df = pd.DataFrame(momentos, columns = ['A','B','C','D','E','F','G'])
-
-for col in df.columns:
-    df[col] = min_max_scaling(df[col])
-
-scaler = MinMaxScaler()
-scaler.fit(df)
-scaled = scaler.fit_transform(df)
-scaledMoments = pd.DataFrame(scaled, columns=df.columns)
-dfFinal = scaledMoments.round(decimals=2)
-print(scaledMoments.head(10))
-dfFinal['Y'] = result
-dfFinal.to_csv("dados.csv", header=False, index=False)
+    def exportHuMoments(self):
+        print("Exportando dados...")
+        df = pd.DataFrame(self.xMoments, columns = ['M1','M2','M3','M4','M5','M6','M7'])
+        dfFinal = self.transformHuData(df)
+        dfFinal['Y'] = self.yMoments
+        dfFinal.to_csv("dadosHu.csv", header=False, index=False)
