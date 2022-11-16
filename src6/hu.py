@@ -2,6 +2,7 @@ import cv2 # Biblioteca OpenCV
 import pandas as pd # Biblioteca pandas para gerar o csv
 from sklearn.preprocessing import MinMaxScaler # Biblioteca para transformar as features em um range
 from utils import * # Modulo com algumas funcoes auxiliares
+from math import copysign, log10
 
 class Hu:
     def __init__(self):
@@ -12,6 +13,11 @@ class Hu:
     
     def getHuMoments(self, image):
         huMoments = cv2.HuMoments(cv2.moments(image)).flatten()
+        for i in range(0,7):
+            huMoments[i] = -1*copysign(1.0, huMoments[i])*log10(abs(huMoments[i]))
+            huMoments[i] = round(huMoments[i],3)
+        # print(huMoments)
+        # exit(1)
         return huMoments
 
     def generateHuMoments(self):
@@ -26,14 +32,14 @@ class Hu:
             count += 1
     
     def transformHuData(self, df):
-        for col in df.columns:
-            df[col] = minMaxScaling(df[col])
+        # for col in df.columns:
+        #     df[col] = minMaxScaling(df[col])
 
-        self.scaler.fit(df)
-        scaled = self.scaler.fit_transform(df)
-        scaledMoments = pd.DataFrame(scaled, columns=df.columns)
-        dfFinal = scaledMoments.round(decimals=2)
-        return dfFinal
+        # self.scaler.fit(df)
+        # scaled = self.scaler.fit_transform(df)
+        # scaledMoments = pd.DataFrame(scaled, columns=df.columns)
+        # dfFinal = scaledMoments.round(decimals=2)
+        return df
 
     def exportHuMoments(self):
         print("Exportando dados...")

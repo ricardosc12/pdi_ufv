@@ -4,6 +4,7 @@ import pandas as pd
 from sklearn import svm
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
+import pickle
 
 class Svm:
     def __init__(self, kernelType, regularization, gamma, data):
@@ -19,8 +20,12 @@ class Svm:
     def trainModel(self, xTrain, xTest, yTrain):
         print("Treinando o modelo...")
         yPred = self.classifier.fit(xTrain, yTrain).predict(xTest)
+        pickle.dump(self.classifier, open('model.sav', 'wb'))
         return yPred
     
+    def loadModel(self):
+        self.classifier = pickle.load(open('model.sav', 'rb'))  
+
     def getScore(self, yTest, yPred):
         tempYTest = np.array(yTest)
         tempYPred = np.array(yPred)

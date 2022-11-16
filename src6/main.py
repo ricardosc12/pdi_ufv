@@ -1,17 +1,21 @@
 import cv2
-from Hu import Hu
-from Svm import Svm
+from hu import Hu
+from svm import Svm
 from utils import preProcessImage
+import mahotas
 
 hu = Hu()
-hu.generateHuMoments()
-hu.exportHuMoments()
+# hu.generateHuMoments()
+# hu.exportHuMoments()
 
-svm = Svm("rbf", 100, 100, "dadosHu.csv")
-xTrain, xTest, yTrain, yTest = svm.splitTrainTest()
-yPred = svm.trainModel(xTrain, xTest, yTrain)
-svm.getScore(yTest, yPred)
+svm = Svm("rbf", 100, 1, "dadosHu.csv")
+# xTrain, xTest, yTrain, yTest = svm.splitTrainTest()
+# yPred = svm.trainModel(xTrain, xTest, yTrain)
+svm.loadModel()
+# svm.getScore(yTest, yPred)
 
-img = cv2.imread("G.png", 0)
+img = cv2.imread("C1.png", 0)
 imgToPredict = preProcessImage(img)
+# cv2.imshow("asd", imgToPredict)
+# cv2.waitKey(0)
 svm.predictImage(hu.getHuMoments(imgToPredict))
