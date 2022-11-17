@@ -1,8 +1,5 @@
-import cv2 # Biblioteca OpenCV
 import pandas as pd # Biblioteca pandas para gerar o csv
-from sklearn.preprocessing import MinMaxScaler # Biblioteca para transformar as features em um range
 from utils import * # Modulo com algumas funcoes auxiliares
-from math import copysign, log10
 import mahotas
 from sklearn.decomposition import PCA
 import numpy as np

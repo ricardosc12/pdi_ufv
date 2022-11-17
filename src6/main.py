@@ -20,7 +20,7 @@ if(momento=='hu'):
     #svm.loadModel('modelHu_{}.sav'.format(PATH))
     svm.getScore(yTest, yPred)
 
-    img = cv2.imread("C1.png", 0)
+    img = cv2.imread("C.png", 0)
     imgToPredict = preProcessImage(img)
     svm.predictImage(hu.getHuMoments(imgToPredict))
 else:
@@ -48,6 +48,6 @@ else:
     
     svm.getScore(yTest, yPred)
 
-    img = cv2.imread("C1.png", 0)
+    img = cv2.imread("C.png", 0)
     imgToPredict = preProcessImage(img)
     svm.predictImage(zernike.getZernikeMoments(imgToPredict))
