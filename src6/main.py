@@ -7,6 +7,18 @@ import mahotas
 from os import listdir
 from os.path import isfile, join
 
+momento = input("Momento (hu / zernike): ")
+if(momento=='hu'):
+    print("Executando com momento de Hu \n")
+else:
+    pca = input("PCA (y / n): ")
+    if(pca=="y"):
+        print("Executando momento de Zernike com PCA \n")
+    else:
+        print("Executando momento de Zernike sem PCA \n")
+    
+
+
 # HU: 100 1
 # Zernike PCA 100 0.1
 # Zernike 100 50            img sem inverter e blur 5,5
@@ -29,19 +41,19 @@ from os.path import isfile, join
 
 
 # HU 
-hu = Hu(['A','B','C','D','E','F','G','I','L','M','N'])
-# hu = Hu(['acer', 'aerosmith', 'air-jordan', 'airbnb', 'android', 'apple', 'batman', 'bentley', 'boeing', 'boston-celtics', 'chevrolet', 'linux', 'los-angeles-lakers', 'rolling-stones', 'skype'])
-# hu.generateHuMoments()
-# hu.exportHuMoments()
+# hu = Hu(['A','B','C','D','E','F','G','I','L','M','N'])
+# # hu = Hu(['acer', 'aerosmith', 'air-jordan', 'airbnb', 'android', 'apple', 'batman', 'bentley', 'boeing', 'boston-celtics', 'chevrolet', 'linux', 'los-angeles-lakers', 'rolling-stones', 'skype'])
+# # hu.generateHuMoments()
+# # hu.exportHuMoments()
 
-svm = Svm("rbf", 100, 1, "dadosHu.csv")
-# xTrain, xTest, yTrain, yTest = svm.splitTrainTest()
-# yPred = svm.trainModel(xTrain, xTest, yTrain,filename='modelHu.sav')
-svm.loadModel('perfeitinha2.sav')
-# svm.getScore(yTest, yPred)
+# svm = Svm("rbf", 100, 1, "dadosHu.csv")
+# # xTrain, xTest, yTrain, yTest = svm.splitTrainTest()
+# # yPred = svm.trainModel(xTrain, xTest, yTrain,filename='modelHu.sav')
+# svm.loadModel('perfeitinha2.sav')
+# # svm.getScore(yTest, yPred)
 
-img = cv2.imread("C1.png", 0)
-imgToPredict = preProcessImage(img)
-# cv2.imshow("asd",imgToPredict)
-# cv2.waitKey(0)
-svm.predictImage(hu.getHuMoments(imgToPredict))
+# img = cv2.imread("C1.png", 0)
+# imgToPredict = preProcessImage(img)
+# # cv2.imshow("asd",imgToPredict)
+# # cv2.waitKey(0)
+# svm.predictImage(hu.getHuMoments(imgToPredict))
