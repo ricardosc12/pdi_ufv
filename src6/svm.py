@@ -17,14 +17,14 @@ class Svm:
         xTrain, xTest, yTrain, yTest = train_test_split(X, Y, random_state=0)
         return xTrain, xTest, yTrain, yTest
     
-    def trainModel(self, xTrain, xTest, yTrain):
+    def trainModel(self, xTrain, xTest, yTrain,filename='model.sav'):
         print("Treinando o modelo...")
         yPred = self.classifier.fit(xTrain, yTrain).predict(xTest)
-        pickle.dump(self.classifier, open('model.sav', 'wb'))
+        pickle.dump(self.classifier, open(filename, 'wb'))
         return yPred
     
-    def loadModel(self):
-        self.classifier = pickle.load(open('model.sav', 'rb'))  
+    def loadModel(self,filename='model.sav'):
+        self.classifier = pickle.load(open(filename, 'rb'))  
 
     def getScore(self, yTest, yPred):
         tempYTest = np.array(yTest)
@@ -43,7 +43,10 @@ class Svm:
         print("Predizendo imagem...")
         output = self.classifier.predict([data])
         self.translateOutput(output)
-    
+        logos = ['acer', 'aerosmith', 'air-jordan', 'airbnb', 'android', 'apple', 
+        'batman', 'bentley', 'boeing', 'boston-celtics', 'chevrolet', 'linux', 'los-angeles-lakers', 'rolling-stones', 'skype']
+        print("Esta logo e {}".format(logos[output[0]]))
+
     def translateOutput(self, output):
         if output == 0:
             print("Esta imagem e uma letra A!")

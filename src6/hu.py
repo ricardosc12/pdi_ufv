@@ -5,10 +5,10 @@ from utils import * # Modulo com algumas funcoes auxiliares
 from math import copysign, log10
 
 class Hu:
-    def __init__(self):
+    def __init__(self,letters):
         self.xMoments = [] # Armazena os momentos de hu
         self.yMoments = [] # Armazena de qual letra cada momento de hu e
-        self.letters = ['A','B','C','D','E','F','G','I','L','M','N'] # Letras do dataset
+        self.letters = letters # Letras do dataset
         self.scaler = MinMaxScaler() # MinMax para transformar os momentos de Hu
     
     def getHuMoments(self, image):
@@ -29,7 +29,11 @@ class Hu:
                 image = getImageFromDataset(letter, file)
                 self.xMoments.append(self.getHuMoments(image))
                 self.yMoments.append(count)
+                # cv2.imshow("asd", image)
+                # cv2.waitKey(0)
+                # break
             count += 1
+        # exit(1)
     
     def transformHuData(self, df):
         # for col in df.columns:
