@@ -22,8 +22,6 @@ def preProcessImage(img):
         11,
         2
     )
-    # ret3,image = cv2.threshold(image,0,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)
-    # image = cv2.erode(image, None, iterations=1)
     image = 255 - image
     return image
 

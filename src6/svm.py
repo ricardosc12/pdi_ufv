@@ -1,10 +1,10 @@
-import cv2
 import numpy as np
 import pandas as pd
 from sklearn import svm
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 import pickle
+from utils import PATH
 
 class Svm:
     def __init__(self, kernelType, regularization, gamma, data):
@@ -43,30 +43,33 @@ class Svm:
         print("Predizendo imagem...")
         output = self.classifier.predict([data])
         self.translateOutput(output)
-        logos = ['acer', 'aerosmith', 'air-jordan', 'airbnb', 'android', 'apple', 
-        'batman', 'bentley', 'boeing', 'boston-celtics', 'chevrolet', 'linux', 'los-angeles-lakers', 'rolling-stones', 'skype']
-        print("Esta logo e {}".format(logos[output[0]]))
 
     def translateOutput(self, output):
-        if output == 0:
-            print("Esta imagem e uma letra A!")
-        elif output == 1:
-            print("Esta imagem e uma letra B!")
-        elif output == 2:
-            print("Esta imagem e uma letra C!")
-        elif output == 3:
-            print("Esta imagem e uma letra D!")
-        elif output == 4:
-            print("Esta imagem e uma letra E!")
-        elif output == 5:
-            print("Esta imagem e uma letra F!")
-        elif output == 6:
-            print("Esta imagem e uma letra G!")
-        elif output == 7:
-            print("Esta imagem e uma letra I!")
-        elif output == 8:
-            print("Esta imagem e uma letra L!")
-        elif output == 9:
-            print("Esta imagem e uma letra M!")
-        elif output == 10:
-            print("Esta imagem e uma letra N!")
+        if PATH == "dataset_gestos":
+            if output == 0:
+                print("Esta imagem e uma letra A!")
+            elif output == 1:
+                print("Esta imagem e uma letra B!")
+            elif output == 2:
+                print("Esta imagem e uma letra C!")
+            elif output == 3:
+                print("Esta imagem e uma letra D!")
+            elif output == 4:
+                print("Esta imagem e uma letra E!")
+            elif output == 5:
+                print("Esta imagem e uma letra F!")
+            elif output == 6:
+                print("Esta imagem e uma letra G!")
+            elif output == 7:
+                print("Esta imagem e uma letra I!")
+            elif output == 8:
+                print("Esta imagem e uma letra L!")
+            elif output == 9:
+                print("Esta imagem e uma letra M!")
+            elif output == 10:
+                print("Esta imagem e uma letra N!")
+        else:
+            logos = ['acer', 'aerosmith', 'air-jordan', 'airbnb', 'android', 'apple', 
+                    'batman', 'bentley', 'boeing', 'boston-celtics', 'chevrolet', 'linux',
+                    'los-angeles-lakers', 'rolling-stones', 'skype']
+            print("Esta logo e do(a) {}!".format(logos[output[0]]))

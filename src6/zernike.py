@@ -15,15 +15,15 @@ class Zernike:
         self.pca = False
     
     def getZernikeMoments(self,image):
-        momentos = mahotas.features.zernike_moments(image, 8)
+        zernikeMoments = mahotas.features.zernike_moments(image, 8)
         if(self.pca):
             pca = PCA(n_components=0.9, whiten=True)
-            momentos = np.array(momentos)
-            momentos = pca.fit_transform(momentos.reshape(-1,1)).flatten()
-        return momentos
+            zernikeMoments = np.array(zernikeMoments)
+            zernikeMoments = pca.fit_transform(zernikeMoments.reshape(-1,1)).flatten()
+        return zernikeMoments
 
     def generateZernikeMoments(self,pca=False):
-        print("Gerando zernike momentos..." if not pca else "Gerando zernike moments com pca...")
+        print("Gerando momentos zernike..." if not pca else "Gerando momentos zernike com pca...")
         count = 0
         self.pca = pca
         for letter in self.letters:
@@ -32,11 +32,7 @@ class Zernike:
                 image = getImageFromDataset(letter, file)
                 self.xMoments.append(self.getZernikeMoments(image))
                 self.yMoments.append(count)
-                # cv2.imshow("asd", image)
-                # cv2.waitKey(0)
-                # break
             count += 1
-        # exit(1)
         
 
     def exportZernikeMoments(self):
@@ -47,4 +43,7 @@ class Zernike:
         df = pd.DataFrame(self.xMoments, columns = columns)
         dfFinal = df
         dfFinal['Y'] = self.yMoments
-        dfFinal.to_csv("dadosZernike.csv", header=False, index=False)
+        if self.pca:
+            dfFinal.to_csv("dadosZernikePCA.csv", header=False, index=False)
+        else:
+            dfFinal.to_csv("dadosZernike.csv", header=False, index=False)
