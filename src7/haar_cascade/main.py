@@ -26,13 +26,13 @@ for file in [f for f in listdir(path) if isfile(join(path, f))]:
 
 cv2.destroyAllWindows()
 
-#
+
 # Concatena imagens do elenco
-#
+
 
 # faces = {'chris':[], 'rochelle':[],'tonya':[],'drew':[],'julius':[],'greg':[]}
 
-# path = 'faces/'
+# path = 'know/'
 
 # for file in [f for f in listdir(path) if isfile(join(path, f))]:
 #     for face in faces.keys():
@@ -47,5 +47,5 @@ cv2.destroyAllWindows()
 
 # im_tile_resize = concat_tile_resize(dataset)
 
-# cv2.imshow("c",im_tile_resize)
-# cv2.waitKey(0)
+# cv2.imwrite('elenco.png',im_tile_resize)
+
