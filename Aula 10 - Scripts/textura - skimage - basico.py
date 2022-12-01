@@ -2,8 +2,8 @@ import skimage
 import cv2
 
 from skimage.io import imread
-from skimage.feature import greycomatrix
-from skimage.feature import greycoprops
+from skimage.feature import graycomatrix
+from skimage.feature import graycoprops
 import warnings
 warnings.filterwarnings("always")
 
@@ -30,17 +30,17 @@ normed : bool, optional
 If True, normalize each matrix P[:, :, d, theta] by dividing by the total number of accumulated co-occurrences for the given offset. The elements of the resulting matrix sum to 1. The default is False.
 '''
 caracteristicas=[]
-#skimage.feature.greycomatrix(image, distances, angles, levels=256, symmetric=False, normed=False)
+#skimage.feature.graycomatrix(image, distances, angles, levels=256, symmetric=False, normed=False)
 
 def extrairCaracteristicas(im):
     for j in  range (1,50,5):
-        g = skimage.feature.greycomatrix(im, [j], [0], levels=256, symmetric=False, normed=True)
-        contrast= skimage.feature.greycoprops(g, 'contrast')[0][0]
-        energy= skimage.feature.greycoprops(g, 'energy')[0][0]
-        homogeneity= skimage.feature.greycoprops(g, 'homogeneity')[0][0]
-        correlation=skimage.feature.greycoprops(g, 'correlation')[0][0]
-        dissimilarity=skimage.feature.greycoprops(g, 'dissimilarity')[0][0]
-        ASM=skimage.feature.greycoprops(g, 'ASM')[0][0]
+        g = skimage.feature.graycomatrix(im, [j], [0], levels=256, symmetric=False, normed=True)
+        contrast= skimage.feature.graycoprops(g, 'contrast')[0][0]
+        energy= skimage.feature.graycoprops(g, 'energy')[0][0]
+        homogeneity= skimage.feature.graycoprops(g, 'homogeneity')[0][0]
+        correlation=skimage.feature.graycoprops(g, 'correlation')[0][0]
+        dissimilarity=skimage.feature.graycoprops(g, 'dissimilarity')[0][0]
+        ASM=skimage.feature.graycoprops(g, 'ASM')[0][0]
 
 
         #print('contrast is: ', contrast)
@@ -71,3 +71,4 @@ extrairCaracteristicas(im)
 
 df = pd.DataFrame(caracteristicas, columns = ['contrast','energy','homogeneity','correlation,','dissimilarity','ASM'])
 df.head(30)
+print(df)
